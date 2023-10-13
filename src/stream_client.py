@@ -122,10 +122,8 @@ def receive_and_display_video(tcp_video_socket):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-# Opção para escolher se este programa irá enviar ou receber
-choice = input("Digite 'stream' para streamar ou 'watch' para assistir: ")
 
-if choice == 'stream':
+def stream_video():
     # Inicializa a captura de vídeo a partir da webcam (0 é o ID da webcam padrão)
     cap = cv2.VideoCapture(0)
 
@@ -172,8 +170,9 @@ if choice == 'stream':
     print("Conexão com o servidor encerrada.")
     cap.release()
     cv2.destroyAllWindows()
-elif choice == 'watch':
-    
+
+
+def watch_video():
     # Choosing Nickname
     nickname = input("Choose your nickname: ")
 
@@ -217,5 +216,20 @@ elif choice == 'watch':
     cv2.destroyAllWindows()
 
     print("Conexão com o servidor encerrada.")
-else:
-    print("Escolha inválida. Reinicie o programa e escolha 'stream' ou 'watch'.")
+
+
+def main():
+    choice = input("Digite 'stream' para streamar ou 'watch' para assistir: ")
+
+    if choice == "stream":
+        stream_video()
+    
+    elif choice == "watch":
+        watch_video()
+    
+    else:
+        print("Escolha inválida. Reinicie o programa e escolha 'stream' ou 'watch'.")
+
+
+if __name__ == '__main__':
+    main()
