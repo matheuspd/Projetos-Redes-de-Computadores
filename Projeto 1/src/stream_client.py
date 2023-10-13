@@ -75,7 +75,7 @@ def receive_and_display_video(tcp_video_socket):
         frame_encoded = np.frombuffer(frame_data, dtype=np.uint8)
         frame = cv2.imdecode(frame_encoded, cv2.IMREAD_COLOR)
 
-        cv2.imshow('Recebendo Vídeo', frame)
+        cv2.imshow('Stream', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
