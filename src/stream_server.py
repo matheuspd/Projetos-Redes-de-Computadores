@@ -11,6 +11,7 @@ def send_video_to_clients(video_data, connections):
             connection.sendall(video_data)
         except (BrokenPipeError, ConnectionResetError):
             connections.remove(connection)
+            continue
 
 # Função para enviar áudio para clientes conectados
 def send_audio_to_clients(audio_data, connections):
@@ -19,6 +20,7 @@ def send_audio_to_clients(audio_data, connections):
             connection.sendall(audio_data)
         except (BrokenPipeError, ConnectionResetError):
             connections.remove(connection)
+            continue
 
 # Função para lidar com as conexões do servidor
 def server_handling(tcp_video_server, tcp_audio_server):
