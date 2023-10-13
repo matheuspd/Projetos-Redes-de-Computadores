@@ -162,4 +162,4 @@ elif choice == 'watch':
 
     print("Conexão com o servidor encerrada.")
 else:
-    print("Escolha inválida. Reinicie o programa e escolha 'send' ou 'receive'.")
+    print("Escolha inválida. Reinicie o programa e escolha 'stream' ou 'watch'.")
