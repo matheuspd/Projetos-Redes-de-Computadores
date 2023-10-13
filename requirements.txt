@@ -2,3 +2,4 @@ numpy==1.25.2
 opencv_python==4.8.1.78
 opencv_python_headless==4.8.1.78
 PyAudio==0.2.13
+Pillow==10.0.1
