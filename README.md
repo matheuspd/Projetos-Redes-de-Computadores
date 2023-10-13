@@ -12,3 +12,8 @@ No primeiro projeto da disciplina, foi feito um "skype" simplificado: um aplicat
 - numpy: `pip install numpy`
 - OpenCV: `pip install opencv-python`
 - PyAudio: `pip install python-pyaudio`
+
+Para instalar as dependências, simplesmente rode:
+```
+pip install -r requirements.txt
+```
