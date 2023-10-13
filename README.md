@@ -21,8 +21,7 @@ sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp
 sudo apt-get install ffmpeg libav-tools
 sudo pip install pyaudio
 ```
-
-Para instalar as dependências, simplesmente rode:
+Para instalar as outras dependências, simplesmente rode:
 ```
 pip install -r requirements.txt
 ```
