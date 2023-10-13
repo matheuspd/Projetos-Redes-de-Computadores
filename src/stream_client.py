@@ -4,6 +4,34 @@ import pyaudio
 import threading
 import socket
 
+# Listening to Server and Sending Nickname
+def receive(client, nickname):
+    while True:
+        try:
+            # Receive Message From Server
+            # If 'NICK' Send Nickname
+            message = client.recv(1024).decode('ascii')
+            if message == 'NICK':
+                client.send(nickname.encode('ascii'))
+            elif message == 'EXIT':
+                print("You have left the chat.")
+                client.close()
+                break
+            else:
+                print(message)
+        except:
+            # Close Connection When Error
+            print("An error occured!")
+            client.close()
+            break
+
+# Sending Messages To Server
+def write(client, nickname):
+    while True:
+        message = input('')
+        message = '{}: {}'.format(nickname, message)
+        client.send(message.encode('ascii'))
+
 # Função para capturar e enviar áudio em tempo real por uma conexão TCP
 def audio_capture_and_send(audio_stream, tcp_audio_socket, connection_status):
     CHUNK = 1024
@@ -141,6 +169,9 @@ if choice == 'stream':
     cv2.destroyAllWindows()
 elif choice == 'watch':
     
+    # Choosing Nickname
+    nickname = input("Choose your nickname: ")
+
     # Configura o endereço e a porta para enviar o vídeo por TCP
     tcp_video_target_address = ('127.0.0.1', 12345)  # Substitua pelo endereço IP do servidor
     tcp_video_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -158,6 +189,17 @@ elif choice == 'watch':
     except ConnectionRefusedError:
         print("Não foi possível conectar ao servidor.")
         exit()
+
+    # Connecting To Server
+    client_chat = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_chat.connect(('127.0.0.1', 12347))
+
+    # Starting Threads For Listening And Writing in chat
+    receive_thread = threading.Thread(target=receive, args=(client_chat, nickname))
+    receive_thread.start()
+
+    write_thread = threading.Thread(target=write, args=(client_chat, nickname))
+    write_thread.start()
 
     # Inicializa a reprodução de áudio e exibição de vídeo em segundo plano
     audio_stream = None

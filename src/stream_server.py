@@ -4,6 +4,66 @@ import socket
 video_connections = []
 audio_connections = []
 
+clients = []
+nicknames = []
+
+# Sending Messages To All Connected Clients
+def broadcast(message):
+    for client in clients:
+        client.send(message)
+
+def remove_client(client, nickname):    
+    clients.remove(client)
+    client.close()
+    nicknames.remove(nickname)
+    broadcast('{} left!'.format(nickname).encode('ascii'))
+    print('{} left!'.format(nickname))
+
+# Handling Messages From Clients
+def handle(client):
+    index = clients.index(client)
+    nickname = nicknames[index]
+    while True:
+        try:
+            # Broadcasting Messages
+            message = client.recv(1024)
+            if message.decode('ascii').strip() == '/quit':  # Check if the message is "/quit"
+                client.send('EXIT'.encode('ascii'))
+                remove_client(client, nickname)
+                break
+            broadcast(message)
+        except:
+            # Removing And Closing Clients
+            remove_client(client, nickname)
+            break
+
+# Receiving / Listening Function
+def receive(server):
+    try:
+        while True:
+        
+            # Accept Connection
+            client, address = server.accept()
+            print("Connected with {}".format(str(address)))
+
+            # Request And Store Nickname
+            client.send('NICK'.encode('ascii'))
+            nickname = client.recv(1024).decode('ascii')
+            nicknames.append(nickname)
+            clients.append(client)
+
+            # Print And Broadcast Nickname
+            print("Nickname is {}".format(nickname))
+            broadcast("{} joined!".format(nickname).encode('ascii'))
+            client.send('Connected to server!'.encode('ascii'))
+
+            # Start Handling Thread For Client
+            thread = threading.Thread(target=handle, args=(client,))
+            thread.start()
+    except KeyboardInterrupt:
+        print("\nServer has been interrupted.")
+        server.close()
+
 # Função para enviar quadros de vídeo para clientes conectados
 def send_video_to_clients(video_data, connections):
     for connection in connections:
@@ -79,6 +139,16 @@ tcp_audio_server_address = ('0.0.0.0', 54322)
 
 tcp_video_client_address = ('0.0.0.0', 12345)
 tcp_audio_client_address = ('0.0.0.0', 12346)
+
+# Starting chat server
+chat_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+chat_server.bind(('0.0.0.0', 12347))
+chat_server.listen(5) # 5 clientes assistindo
+
+# Inicia a thread para lidar com as conexões do servidor
+chat_server_thread = threading.Thread(target=receive, args=(chat_server,))
+chat_server_thread.daemon = True
+chat_server_thread.start()
 
 # Inicializa os sockets para vídeo e áudio
 tcp_video_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
