@@ -29,8 +29,13 @@ def receive(client, nickname):
 def write(client, nickname):
     while True:
         message = input('')
-        message = '{}: {}'.format(nickname, message)
-        client.send(message.encode('ascii'))
+        if message.lower() == "/quit" or message.lower() == "/exit":
+            client.send('/quit'.encode('ascii'))  # Envia o comando para o servidor
+            client.close()
+            break
+        else:
+            message = '{}: {}'.format(nickname, message)
+            client.send(message.encode('ascii'))
 
 # Função para capturar e enviar áudio em tempo real por uma conexão TCP
 def audio_capture_and_send(audio_stream, tcp_audio_socket, connection_status):
