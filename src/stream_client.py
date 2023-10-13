@@ -20,11 +20,20 @@ def audio_capture_and_send(audio_stream, tcp_audio_socket, connection_status):
 
 # Função para enviar quadros de vídeo por uma conexão TCP
 def send_video_frames(cap, tcp_video_socket, connection_status):
+    cv2.namedWindow('Local Video', cv2.WINDOW_NORMAL)
+    cv2.resizeWindow('Local Video', 800, 600)
+
     while True:
         ret, frame = cap.read()
         
         if not ret:
             print("Erro ao ler quadro.")
+            break
+
+        cv2.imshow('Local Video', frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            connection_status.set()
             break
 
         # Codifica o quadro como JPEG antes de enviar para reduzir o tamanho
