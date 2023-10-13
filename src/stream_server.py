@@ -133,50 +133,58 @@ def receive_audio(audio_conn, connections):
             print("Um cliente(áudio) foi desconectado.")
             break        
 
-# Configura as portas para vídeo e áudio
-tcp_video_server_address = ('0.0.0.0', 54321)
-tcp_audio_server_address = ('0.0.0.0', 54322)
 
-tcp_video_client_address = ('0.0.0.0', 12345)
-tcp_audio_client_address = ('0.0.0.0', 12346)
+def main():
+    # Configura as portas para vídeo e áudio
+    tcp_video_server_address = ('0.0.0.0', 54321)
+    tcp_audio_server_address = ('0.0.0.0', 54322)
 
-# Starting chat server
-chat_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-chat_server.bind(('0.0.0.0', 12347))
-chat_server.listen(5) # 5 clientes assistindo
+    tcp_video_client_address = ('0.0.0.0', 12345)
+    tcp_audio_client_address = ('0.0.0.0', 12346)
 
-# Inicia a thread para lidar com as conexões do servidor
-chat_server_thread = threading.Thread(target=receive, args=(chat_server,))
-chat_server_thread.daemon = True
-chat_server_thread.start()
+    # Starting chat server
+    chat_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    chat_server.bind(('0.0.0.0', 12347))
+    chat_server.listen(5) # 5 clientes assistindo
 
-# Inicializa os sockets para vídeo e áudio
-tcp_video_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tcp_video_server.bind(tcp_video_server_address)
-tcp_video_server.listen(1)
+    # Inicia a thread para lidar com as conexões do servidor
+    chat_server_thread = threading.Thread(target=receive, args=(chat_server,))
+    chat_server_thread.daemon = True
+    chat_server_thread.start()
 
-tcp_audio_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tcp_audio_server.bind(tcp_audio_server_address)
-tcp_audio_server.listen(1)
+    # Inicializa os sockets para vídeo e áudio
+    tcp_video_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_video_server.bind(tcp_video_server_address)
+    tcp_video_server.listen(1)
 
-tcp_video_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tcp_video_client.bind(tcp_video_client_address)
-tcp_video_client.listen(5) # 5 clientes assistindo
+    tcp_audio_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_audio_server.bind(tcp_audio_server_address)
+    tcp_audio_server.listen(1)
 
-tcp_audio_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-tcp_audio_client.bind(tcp_audio_client_address)
-tcp_audio_client.listen(5) # 5 clientes assistindo
+    tcp_video_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_video_client.bind(tcp_video_client_address)
+    tcp_video_client.listen(5) # 5 clientes assistindo
 
-# Inicia a thread para lidar com as conexões do servidor
-server_handling_thread = threading.Thread(target=server_handling, args=(tcp_video_server, tcp_audio_server))
-server_handling_thread.daemon = True
-server_handling_thread.start()
+    tcp_audio_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_audio_client.bind(tcp_audio_client_address)
+    tcp_audio_client.listen(5) # 5 clientes assistindo
 
-# Inicia a thread para lidar com as conexões do cliente
-client_handling_thread = threading.Thread(target=client_handling, args=(tcp_video_client, tcp_audio_client))
-client_handling_thread.daemon = True
-client_handling_thread.start()
+    # Inicia a thread para lidar com as conexões do servidor
+    server_handling_thread = threading.Thread(target=server_handling, 
+                                              args=(tcp_video_server, tcp_audio_server))
+    server_handling_thread.daemon = True
+    server_handling_thread.start()
 
-# Mantém o servidor em execução
-while True:
-    pass
+    # Inicia a thread para lidar com as conexões do cliente
+    client_handling_thread = threading.Thread(target=client_handling, 
+                                              args=(tcp_video_client, tcp_audio_client))
+    client_handling_thread.daemon = True
+    client_handling_thread.start()
+
+    # Mantém o servidor em execução
+    while True:
+        pass
+
+
+if __name__ == '__main__':
+    main()
