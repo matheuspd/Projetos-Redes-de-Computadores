@@ -13,7 +13,7 @@ No primeiro projeto da disciplina, foi feito um serviço de streaming simplifica
 
 - numpy: `pip install numpy`
 - OpenCV: `pip install opencv-python`
-- PyAudio: `pip install python-pyaudio`
+- PyAudio: `pip install pyaudio`
 - Pillow: `pip install pillow`
 
 A instalação do módulo PyAudio é meio problemática. Primeiro, instale os seguintes pacotes (ou equivalentes para outras distribuições Linux):
