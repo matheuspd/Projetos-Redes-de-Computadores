@@ -17,3 +17,10 @@ Para instalar as dependências, simplesmente rode:
 ```
 pip install -r requirements.txt
 ```
+
+A instalação do módulo PyAudio é meio problemática. Primeiro, instale os seguintes pacotes:
+```
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg libav-tools
+sudo pip install pyaudio
+```
