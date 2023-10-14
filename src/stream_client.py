@@ -13,6 +13,7 @@ def toggle_capture():
     global capturing
     global stream_thread
     capturing = not capturing
+    # If user starts capturing, then start streaming video and show it on screen.
     if capturing:
         start_button.config(text="Stop Capture")
         update_frame()
@@ -28,6 +29,10 @@ def toggle_capture():
             audio_thread.join(timeout=0)
             video_thread.join(timeout=0)
             stream_thread.join(timeout=0)
+        
+            cap.release()
+            root.destroy()
+            exit(0)
 
 # Function to capture webcam feed and update the canvas
 def update_frame():

@@ -26,3 +26,13 @@ Para instalar as outras dependências, simplesmente rode:
 ```
 pip install -r requirements.txt
 ```
+
+O projeto foi testado em Python 3.10.11 e nas distribuições Fedora 38 e Ubuntu 22.02. Para rodar o servidor, rode o comando:
+```
+python3 src/stream_server.py
+```
+Para começar a transmitir o seu vídeo (microfone + webcam), rode o comando:
+```
+python3 src/stream_client.py
+```
+e selecione a opção "stream". Finalmente, conecte um usuário com o servidor para assistir à transmissão executando o mesmo comando, mas selecionando a opção "watch". A aplicação foi "hardcoded" para se conectar no Localhost, mas essa poderia ter sido facilmente adaptada para suportar qualquer IP ou URL passado pelo usuário. A adaptação não foi feita para facilitar a demonstração do funcionamento da aplicação num único PC.
