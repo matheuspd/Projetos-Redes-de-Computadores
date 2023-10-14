@@ -5,7 +5,7 @@ import threading
 import socket
 
 # Listening to Server and Sending Nickname
-def receive(client, nickname, status):
+def receive(client, nickname):
     while True:
         try:
             # Receive Message From Server
@@ -26,7 +26,7 @@ def receive(client, nickname, status):
             break
 
 # Sending Messages To Server
-def write(client, nickname, status):
+def write(client, nickname):
     while True:
         message = input('')
         if message.lower() == "/quit" or message.lower() == "/exit":
