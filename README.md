@@ -9,7 +9,7 @@ Repositório para projetos da disciplina Redes de Computadores
 
 ## Projeto 1
 
-No primeiro projeto da disciplina, foi feito um serviço de streaming simplificado: um aplicativo de transmissão de vídeo com conexão peer-to-peer (P2P) utilizando sockets com o protocolo TCP. As dependências do projeto são:
+No primeiro projeto da disciplina, foi feito um serviço de streaming simplificado: um aplicativo de transmissão de vídeo com conexão através de um servidor central, utilizando sockets com o protocolo TCP. As dependências do projeto são:
 
 - numpy: `pip install numpy`
 - OpenCV: `pip install opencv-python`
