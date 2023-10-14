@@ -9,7 +9,9 @@ Repositório para projetos da disciplina Redes de Computadores
 
 ## Projeto 1
 
-No primeiro projeto da disciplina, foi feito um serviço de streaming simplificado: um aplicativo de transmissão de vídeo com conexão através de um servidor central, utilizando sockets com o protocolo TCP. As dependências do projeto são:
+No primeiro projeto da disciplina, foi feito um serviço de streaming simplificado: um aplicativo de transmissão de vídeo do "streamer", com conexão através de um servidor central, e um chat para os usuários que se conectarem para assistir a stream, utilizando sockets com o protocolo TCP.
+
+As dependências do projeto são:
 
 - numpy: `pip install numpy`
 - OpenCV: `pip install opencv-python`
@@ -17,8 +19,7 @@ No primeiro projeto da disciplina, foi feito um serviço de streaming simplifica
 
 A instalação do módulo PyAudio é meio problemática. Primeiro, instale os seguintes pacotes (ou equivalentes para outras distribuições Linux):
 ```
-sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-sudo apt-get install ffmpeg libav-tools
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg
 sudo pip install pyaudio
 ```
 Para instalar as outras dependências, simplesmente rode:
@@ -34,4 +35,4 @@ Para começar a transmitir o seu vídeo (microfone + webcam), rode o comando:
 ```
 python3 src/stream_client.py
 ```
-e selecione a opção "stream". Finalmente, conecte um usuário com o servidor para assistir à transmissão executando o mesmo comando, mas selecionando a opção "watch". A aplicação foi "hardcoded" para se conectar no Localhost, mas essa poderia ter sido facilmente adaptada para suportar qualquer IP ou URL passado pelo usuário. A adaptação não foi feita para facilitar a demonstração do funcionamento da aplicação num único PC.
+e selecione a opção "stream". Finalmente, conecte um usuário com o servidor para assistir à transmissão executando o mesmo comando, mas selecionando a opção "watch". É possível conectar até 5 usuários, porém isso pode ser alterado facilmente no código do servidor. Além disso, os usuários que se conectarem podem se comunicar por um chat na linha de comando após fornecerem seus "nicknames". A aplicação foi "hardcoded" para se conectar no Localhost, mas essa poderia ter sido facilmente adaptada para suportar qualquer IP ou URL passado pelo usuário. A adaptação foi feita para facilitar a demonstração do funcionamento da aplicação num único PC.
