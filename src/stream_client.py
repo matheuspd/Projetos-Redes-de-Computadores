@@ -65,7 +65,7 @@ def send_video_frames(cap, tcp_video_socket, connection_status):
 
         cv2.imshow('Local Video', frame)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q') or cv2.getWindowProperty('Local Video', cv2.WND_PROP_VISIBLE) < 1:
             connection_status.set()
             break
 
@@ -119,7 +119,7 @@ def receive_and_display_video(tcp_video_socket):
 
         cv2.imshow('Stream', frame)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q') or cv2.getWindowProperty('Stream', cv2.WND_PROP_VISIBLE) < 1:
             break
 
 
